@@ -2,6 +2,7 @@ package model;
 
 import database.CRUD;
 import database.ConfigDB;
+import entity.Especialidad;
 import entity.Medico;
 
 import javax.swing.*;
@@ -13,13 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModelMedico implements CRUD {
+
     @Override
     public Object insert(Object obj) {
 
         // 1. Abrimos la conexión
         Connection objConnection = ConfigDB.openConnection();
 
-        // 2. Convertir el objeto que llego a una especialidad
+        // 2. Convertir el objeto que llego a una medico
         Medico objMedico = (Medico) obj;
 
         try {
@@ -151,7 +153,44 @@ public class ModelMedico implements CRUD {
 
     @Override
     public boolean delete(Object obj) {
-        return false;
+
+        // 1. Convertir el objeto
+        Medico objMedico = (Medico) obj;
+
+        // 2. Abrir la conexión
+        Connection objConnection = ConfigDB.openConnection();
+
+        // 3. Crear una variable de estado
+        boolean isDeleted = false;
+
+        try {
+
+            // 4. Escribir la sentencia SQL
+            String sql = "DELETE FROM medico WHERE id_medico = ?;";
+
+            // 5. Creamos el prepareStatement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            // 6. Dar valor a ?
+            objPrepare.setInt(1, objMedico.getId_medico());
+
+            // 7. Ejecutamos el Query
+            int totalAffectedRows = objPrepare.executeUpdate();
+
+            // Si las filas afectadas fueron mayor a cero quiere decir que si elimino algo
+            if (totalAffectedRows > 0) {
+                isDeleted = true;
+                JOptionPane.showMessageDialog(null, "The doctor was correctly eliminated.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        // 8. Cerrar la conexión
+        ConfigDB.closeConnection();
+
+        return isDeleted;
     }
 
     public Medico findById(int id_medico) {

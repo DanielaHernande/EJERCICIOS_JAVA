@@ -83,7 +83,10 @@ public class Main {
 
                             case "3":
                                 MedicoController.update();
+                                break;
 
+                            case "4":
+                                MedicoController.delete();
                                 break;
                         }
 

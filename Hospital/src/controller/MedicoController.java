@@ -1,4 +1,5 @@
 package controller;
+
 import entity.Especialidad;
 import entity.Medico;
 import model.ModelMedico;
@@ -18,7 +19,7 @@ public class MedicoController {
         // Pedimos los datos al ususario
         String nombre = JOptionPane.showInputDialog("Enter the name of the doctor");
         String apellidos = JOptionPane.showInputDialog("Enter the doctor's last name(s)");
-        int especialidad = Integer.parseInt(JOptionPane.showInputDialog(objMOdel.findAll()+ "\n" + "Enter the specialty ID"));
+        int especialidad = Integer.parseInt(JOptionPane.showInputDialog(objMOdel.findAll() + "\n" + "Enter the specialty ID"));
 
         // Creamos una instancia de médico
         Medico objMedico = new Medico();
@@ -59,7 +60,8 @@ public class MedicoController {
             // Convertir el Objeto a una especialidad
             Medico objMedico = (Medico) iterador;
             listMedico += objMedico.toString() + "\n";
-        };
+        }
+        ;
         return listMedico;
     }
 
@@ -69,8 +71,9 @@ public class MedicoController {
         ModelMedico objModelMedico = new ModelMedico();
 
         String listMedico = getAllString();
+        String listEspecialidad = EspecialidadController.getAllString();
 
-        int idUpdate = Integer.parseInt(JOptionPane.showInputDialog(listMedico + "Enter the ID of the doctor to edit: "));
+        int idUpdate = Integer.parseInt(JOptionPane.showInputDialog(listMedico + "\n Enter the ID of the doctor to edit: "));
 
         // Obteniendo un medico por el id ingresado
         Medico objMedico = objModelMedico.findById(idUpdate);
@@ -81,12 +84,32 @@ public class MedicoController {
 
         } else {
 
-            int especialidad = Integer.parseInt(JOptionPane.showInputDialog(null ,"Enter the new specialty: ", + objMedico.getId_especialidad()));
+            int especialidad = Integer.parseInt(JOptionPane.showInputDialog(null, listEspecialidad + "Enter the new specialty: ", +objMedico.getId_especialidad()));
 
             objMedico.setId_especialidad(especialidad);
 
             objModelMedico.update(objMedico);
         }
+    }
 
+    public static void delete() {
+
+        ModelMedico objModelMedico = new ModelMedico();
+
+        String listMedico = getAllString();
+
+        int idDelete = Integer.parseInt(JOptionPane.showInputDialog(listMedico + "\n Enter the Id of the doctor to be deleted: "));
+
+        Medico objMedico = objModelMedico.findById(idDelete);
+
+        if (objMedico == null) {
+            JOptionPane.showMessageDialog(null, "Doctor not found");
+
+        } else {
+
+            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the doctor? \n" + objMedico.toString());
+
+            if (confirm == 0) objModelMedico.delete(objMedico);
+        }
     }
 }

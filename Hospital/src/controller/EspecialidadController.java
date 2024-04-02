@@ -39,7 +39,8 @@ public class EspecialidadController {
             // Convertir el Objeto a una especialidad
             Especialidad objEspecialidad = (Especialidad) iterador;
             listEspecialidad += objEspecialidad.toString() + "\n";
-        };
+        }
+        ;
 
         JOptionPane.showMessageDialog(null, listEspecialidad);
 
@@ -55,7 +56,8 @@ public class EspecialidadController {
             // Convertir el Objeto a una especialidad
             Especialidad objEspecialidad = (Especialidad) iterador;
             listEspecialidad += objEspecialidad.toString() + "\n";
-        };
+        }
+        ;
         return listEspecialidad;
     }
 
@@ -76,7 +78,7 @@ public class EspecialidadController {
 
             int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the specialty? \n" + objEspecialidad.toString());
 
-            if (confirm == 0 ) objMEspecialidad.delete(objEspecialidad);
+            if (confirm == 0) objMEspecialidad.delete(objEspecialidad);
         }
     }
 

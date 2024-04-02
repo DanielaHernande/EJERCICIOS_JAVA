@@ -51,7 +51,7 @@ public class Paciente {
         this.apellidos = apellidos;
     }
 
-    public Date getFecha_nacimiento() {
+    public java.sql.Date getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
