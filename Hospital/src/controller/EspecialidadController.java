@@ -32,7 +32,7 @@ public class EspecialidadController {
     public static void getAll() {
 
         ModelEspecialidad objModel = new ModelEspecialidad();
-        String listEspecialidad = "Specialties list \n";
+        String listEspecialidad = "Specialties list: \n";
 
         for (Object iterador : objModel.findAll()) {
 
@@ -48,7 +48,7 @@ public class EspecialidadController {
     public static String getAllString() {
 
         ModelEspecialidad objModel = new ModelEspecialidad();
-        String listEspecialidad = "Specialties list \n";
+        String listEspecialidad = "Specialties list: \n";
 
         for (Object iterador : objModel.findAll()) {
 

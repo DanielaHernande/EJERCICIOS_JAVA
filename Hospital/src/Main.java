@@ -1,4 +1,6 @@
 import controller.EspecialidadController;
+import controller.MedicoController;
+
 import javax.swing.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -54,11 +56,38 @@ public class Main {
                         }
 
                     } while (!option1.equals("4"));
-
                     break;
 
                 case "2":
                     String option2 = "";
+
+                    do {
+                        option2 = JOptionPane.showInputDialog("""
+                                1. Enter a new doctor.
+                                2. Consult all doctors.
+                                3. Update doctor.
+                                4. Delete a doctor
+                                5. Exit.
+                                                                
+                                Choose an option:
+                                """);
+                        switch (option2) {
+
+                            case "1":
+                                MedicoController.create();
+                                break;
+
+                            case "2":
+                                MedicoController.getAll();
+                                break;
+
+                            case "3":
+                                MedicoController.update();
+
+                                break;
+                        }
+
+                    } while (!option2.equals("5"));
                     break;
             }
 

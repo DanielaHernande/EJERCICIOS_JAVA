@@ -164,7 +164,7 @@ public class ModelEspecialidad implements CRUD {
         try {
 
             //3. Sentencia SQL
-            String sql = "SELECT * FROM especialidad WHERE id = ?;";
+            String sql = "SELECT * FROM especialidad WHERE id_especialidad = ?;";
 
             //4. Preparamos el statement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
@@ -193,5 +193,27 @@ public class ModelEspecialidad implements CRUD {
 
         return objEspecialidad;
     }
+
+    /*public List<Especialidad> findByName(String name) {
+
+        // Creamos la lista
+        List<Especialidad> listEspecialidad = new ArrayList<>();
+
+        // Abrimos la conexion
+        Connection objConnection = ConfigDB.openConnection();
+
+        try {
+            // Sentencia SQL
+            String
+
+
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+
+        }
+
+        return listEspecialidad;
+    }*/
 
 }
