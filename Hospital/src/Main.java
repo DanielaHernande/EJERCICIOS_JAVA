@@ -1,3 +1,4 @@
+import controller.EspecialidadController;
 import database.ConfigDB;
 
 import javax.swing.*;
@@ -10,24 +11,47 @@ public class Main {
         String option = "";
 
         do {
-            JOptionPane.showInputDialog("""
+            option = JOptionPane.showInputDialog("""
                     
-                    1. Option de especializacion 
+                    1. Specialization option.
+                    2. Add doctor.
+                    3. Add a patient.
+                    4. Add an appointment.
+                    5. Exit.
                     
+                    Choose an option:
                     """);
 
             switch (option) {
 
                 case "1":
+                    String option1 = "";
+
+                    do {
+                        option1 = JOptionPane.showInputDialog("""
+                                1. Enter a new specialty.
+                                2. Consult all specialties.
+                                3. Eliminate a specialty.
+                                4. Exit.
+                                
+                                Choose an option:
+                                """);
+
+                        switch (option1) {
+
+                            case "1":
+                                EspecialidadController.create();
+                                break;
+                        }
+
+
+                    } while (!option1.equals("4"));
+
 
                     break;
             }
 
-
-
-
-
-        } while (option.equals("2"));
+        } while (!option.equals("5"));
 
         JOptionPane.showMessageDialog(null, "Chao :)");
 

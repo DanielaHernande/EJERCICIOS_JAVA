@@ -5,7 +5,7 @@ public class Medico {
     private int id_medico;
     private String nombre;
     private String apellidos;
-    private Especialidad id_especialidad;
+    private int id_especialidad;
 
     // Constructores
 
@@ -14,7 +14,7 @@ public class Medico {
     }
 
     // Con parámetros
-    public Medico(int id_medico, String nombre, String apellidos, Especialidad id_especialidad) {
+    public Medico(int id_medico, String nombre, String apellidos, int id_especialidad) {
         this.id_medico = id_medico;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -46,15 +46,16 @@ public class Medico {
         this.apellidos = apellidos;
     }
 
-    public Especialidad getId_especialidad() {
+    public int getId_especialidad() {
         return id_especialidad;
     }
 
-    public void setId_especialidad(Especialidad id_especialidad) {
+    public void setId_especialidad(int id_especialidad) {
         this.id_especialidad = id_especialidad;
     }
 
     // toString
+
     @Override
     public String toString() {
         return "Medico{" +

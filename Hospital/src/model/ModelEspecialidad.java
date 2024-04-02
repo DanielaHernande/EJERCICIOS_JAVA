@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ModelEspecialidad implements CRUD {
@@ -61,7 +62,49 @@ public class ModelEspecialidad implements CRUD {
 
     @Override
     public List<Object> findAll() {
-        return null;
+
+        // 1. Crear lista pata guardar lo que nos devuelve la base de datos
+        List<Object> listaEspecialidades = new ArrayList<>();
+
+        // 2. Abrir la conexión
+        Connection objConnection = ConfigDB.openConnection();
+
+        try {
+
+            // 3. Escribir el Query en sql
+            String sql = "SELECT * FROM especialidad;";
+
+            // 4. Usar el prepareStatement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            // 5. Ejecutar el Query y obtener el resulatdo (ResulSet)
+            ResultSet objResult = objPrepare.executeQuery();
+
+            // 6. Mientras hay un resulatdo siguiente hacer
+            while (objResult.next()) {
+
+                // 6.1 Crear una especialidad
+                Especialidad objEspecialidad = new Especialidad();
+
+                // 6.2 Llenar el objeto con la información de la bd
+
+                objEspecialidad.setId_especialidad(objResult.getInt("id_especialidad"));
+                objEspecialidad.setNombre(objResult.getString("nombre"));
+                objEspecialidad.setDescripcion(objResult.getString("descripcion"));
+
+                // 6.3 Agregar especialidad a la lista
+                listaEspecialidades.add(objEspecialidad);
+
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        // 7. Cerrar la conexión
+        ConfigDB.closeConnection();
+
+        return listaEspecialidades;
     }
 
     @Override
@@ -71,6 +114,44 @@ public class ModelEspecialidad implements CRUD {
 
     @Override
     public boolean delete(Object obj) {
-        return false;
+
+        // 1. Convertir el objeto
+        Especialidad objEspecialidad = (Especialidad) obj;
+
+        // 2. Abrir la conexión
+        Connection objConnection = ConfigDB.openConnection();
+
+        // 3. Crear una variable de estado
+        boolean isDeleted = false;
+
+        try {
+
+            // 4. Escribir la sentencia SQL
+            String sql = "DELETE FROM especialidad WHERE id_especialidad = ?;";
+
+            // 5. Creamos el prepareStatement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            // 6. Dar valor a ?
+            objPrepare.setInt(1, objEspecialidad.getId_especialidad());
+
+            // 7. Ejecutamos el Query
+            int totalAffectedRows = objPrepare.executeUpdate();
+
+            // Si las filas afectadas fueron mayor a cero quiere decir que si elimino algo
+            if (totalAffectedRows > 0) {
+
+                isDeleted = true;
+                JOptionPane.showMessageDialog(null, "The specialty was correctly eliminated.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        // 8. Cerrar la conexión
+        ConfigDB.closeConnection();
+
+        return isDeleted;
     }
 }

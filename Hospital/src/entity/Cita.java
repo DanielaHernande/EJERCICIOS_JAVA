@@ -6,8 +6,8 @@ import java.util.Date;
 public class Cita {
 
     private int id_cita;
-    private Paciente id_paciente;
-    private Medico id_medico;
+    private int id_paciente;
+    private int id_medico;
     private Date fecha_cita;
     private Time hora_cita;
     private String motivo;
@@ -19,7 +19,9 @@ public class Cita {
     }
 
     // Con parámetros
-    public Cita(int id_cita, Paciente id_paciente, Medico id_medico, Date fecha_cita, Time hora_cita, String motivo) {
+
+
+    public Cita(int id_cita, int id_paciente, int id_medico, Date fecha_cita, Time hora_cita, String motivo) {
         this.id_cita = id_cita;
         this.id_paciente = id_paciente;
         this.id_medico = id_medico;
@@ -37,19 +39,19 @@ public class Cita {
         this.id_cita = id_cita;
     }
 
-    public Paciente getId_paciente() {
+    public int getId_paciente() {
         return id_paciente;
     }
 
-    public void setId_paciente(Paciente id_paciente) {
+    public void setId_paciente(int id_paciente) {
         this.id_paciente = id_paciente;
     }
 
-    public Medico getId_medico() {
+    public int getId_medico() {
         return id_medico;
     }
 
-    public void setId_medico(Medico id_medico) {
+    public void setId_medico(int id_medico) {
         this.id_medico = id_medico;
     }
 
