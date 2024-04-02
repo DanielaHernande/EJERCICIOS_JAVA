@@ -87,7 +87,6 @@ public class ModelEspecialidad implements CRUD {
                 Especialidad objEspecialidad = new Especialidad();
 
                 // 6.2 Llenar el objeto con la información de la bd
-
                 objEspecialidad.setId_especialidad(objResult.getInt("id_especialidad"));
                 objEspecialidad.setNombre(objResult.getString("nombre"));
                 objEspecialidad.setDescripcion(objResult.getString("descripcion"));
@@ -140,7 +139,6 @@ public class ModelEspecialidad implements CRUD {
 
             // Si las filas afectadas fueron mayor a cero quiere decir que si elimino algo
             if (totalAffectedRows > 0) {
-
                 isDeleted = true;
                 JOptionPane.showMessageDialog(null, "The specialty was correctly eliminated.");
             }
@@ -154,4 +152,46 @@ public class ModelEspecialidad implements CRUD {
 
         return isDeleted;
     }
+
+    public Especialidad findById(int id_especialidad) {
+
+        //1. Abrimos la conexion
+        Connection objConnection = ConfigDB.openConnection();
+
+        //2. Crear el coder que vamos retornar
+        Especialidad objEspecialidad = null;
+
+        try {
+
+            //3. Sentencia SQL
+            String sql = "SELECT * FROM especialidad WHERE id = ?;";
+
+            //4. Preparamos el statement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            //5. Darle valor al paremetro del query
+            objPrepare.setInt(1, id_especialidad);
+
+            //6. Ejecutamos el Query
+            ResultSet objResult = objPrepare.executeQuery();
+
+            if (objResult.next()) {
+
+                objEspecialidad = new Especialidad();
+
+                objEspecialidad.setNombre(objResult.getString("nombre"));
+                objEspecialidad.setDescripcion(objResult.getString("descripcion"));
+                objEspecialidad.setId_especialidad(objResult.getInt("id_especialidad"));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        //7.Cerrar la conexión
+        ConfigDB.closeConnection();
+
+        return objEspecialidad;
+    }
+
 }

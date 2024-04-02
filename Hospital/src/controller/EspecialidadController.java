@@ -7,7 +7,6 @@ import javax.swing.*;
 
 public class EspecialidadController {
 
-
     public static void create() {
 
         // Usamos el modelo
@@ -41,9 +40,12 @@ public class EspecialidadController {
             Especialidad objEspecialidad = (Especialidad) iterador;
             listEspecialidad += objEspecialidad.toString() + "\n";
         };
+
+        JOptionPane.showMessageDialog(null, listEspecialidad);
+
     }
 
-    public static void getAllString() {
+    public static String getAllString() {
 
         ModelEspecialidad objModel = new ModelEspecialidad();
         String listEspecialidad = "Specialties list \n";
@@ -51,9 +53,52 @@ public class EspecialidadController {
         for (Object iterador : objModel.findAll()) {
 
             // Convertir el Objeto a una especialidad
-            Especialidad objEspecialidad = new Especialidad();
+            Especialidad objEspecialidad = (Especialidad) iterador;
             listEspecialidad += objEspecialidad.toString() + "\n";
         };
+        return listEspecialidad;
     }
+
+    public static void delete() {
+
+        ModelEspecialidad objMEspecialidad = new ModelEspecialidad();
+
+        String listESpecialidad = getAllString();
+
+        int idDelete = Integer.parseInt(JOptionPane.showInputDialog(listESpecialidad + "\n Enter the Id of the specialty to be deleted: "));
+
+        Especialidad objEspecialidad = objMEspecialidad.findById(idDelete);
+
+        if (objEspecialidad == null) {
+            JOptionPane.showMessageDialog(null, "Specialty not found");
+
+        } else {
+
+            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the specialty? \n" + objEspecialidad.toString());
+
+            if (confirm == 0 ) objMEspecialidad.delete(objEspecialidad);
+        }
+    }
+
+/*    public static void getById() {
+
+        int idESpecialidad = Integer.parseInt(JOptionPane.showInputDialog("Enter the specialty ID "));
+        ModelEspecialidad objAuthor = new ModelEspecialidad();
+
+        String listaString = "COINCIDENCES \n";
+
+        Especialidad especialidad = objAuthor.findById(idESpecialidad);
+
+        if (especialidad != null) {
+            listaString += especialidad.toString();
+
+        } else {
+
+            listaString += "Specialty not found";
+        }
+
+        JOptionPane.showMessageDialog(null, listaString);
+
+    }*/
 
 }

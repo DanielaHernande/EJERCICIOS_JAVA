@@ -1,6 +1,4 @@
 import controller.EspecialidadController;
-import database.ConfigDB;
-
 import javax.swing.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -12,13 +10,13 @@ public class Main {
 
         do {
             option = JOptionPane.showInputDialog("""
-                    
+                                        
                     1. Specialization option.
                     2. Add doctor.
                     3. Add a patient.
                     4. Add an appointment.
                     5. Exit.
-                    
+                                        
                     Choose an option:
                     """);
 
@@ -33,7 +31,7 @@ public class Main {
                                 2. Consult all specialties.
                                 3. Eliminate a specialty.
                                 4. Exit.
-                                
+                                                                
                                 Choose an option:
                                 """);
 
@@ -42,12 +40,25 @@ public class Main {
                             case "1":
                                 EspecialidadController.create();
                                 break;
-                        }
 
+                            case "2":
+                                EspecialidadController.getAll();
+                                break;
+
+                            case "3":
+                                EspecialidadController.delete();
+                                break;
+
+                            default:
+                                JOptionPane.showMessageDialog(null, "Enter a valid option");
+                        }
 
                     } while (!option1.equals("4"));
 
+                    break;
 
+                case "2":
+                    String option2 = "";
                     break;
             }
 
