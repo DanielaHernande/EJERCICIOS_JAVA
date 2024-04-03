@@ -6,10 +6,8 @@ import entity.Cita;
 import entity.Medico;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ModelCita implements CRUD {
@@ -21,20 +19,22 @@ public class ModelCita implements CRUD {
         Connection objConnection = ConfigDB.openConnection();
 
         // 2. Convertir el objeto que llego a una medico
-        Cita objCIta = (Cita) obj;
+        Cita objCita = (Cita) obj;
 
         try {
 
             // 3. Escribir el SQL
-            String sql = "INSERT INTO medico (nombre, apellidos, id_especialidad) VALUES (?, ?, ?);";
+            String sql = "INSERT INTO cita (id_paciente, id_medico, fecha_cita, hora_cita, motivo) VALUES (?, ?, ?, ?, ?);";
 
             // 4. Preparar el Statement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
             // 5. Asignar valores a los ??
-            objPrepare.setString(1, objMedico.getNombre());
-            objPrepare.setString(2, objMedico.getApellidos());
-            objPrepare.setInt(3, objMedico.getId_especialidad());
+            objPrepare.setInt(1, objCita.getId_paciente());
+            objPrepare.setInt(2, objCita.getId_medico());
+            objPrepare.setDate(3, (Date) objCita.getFecha_cita());
+            objPrepare.setTime(4, objCita.getHora_cita());
+            objPrepare.setString(5, objCita.getMotivo());
 
             // 6. Ejecutar el Query
             objPrepare.execute();
@@ -46,10 +46,10 @@ public class ModelCita implements CRUD {
             while (objRest.next()) {
 
                 // Podemos obtener el valor tambien con indices
-                objMedico.setId_especialidad(objRest.getInt(1));
+                objCita.setId_cita(objRest.getInt(1));
             }
 
-            JOptionPane.showMessageDialog(null, "Doctor added correctly.");
+            JOptionPane.showMessageDialog(null, "Appointment successfully added.");
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -58,12 +58,58 @@ public class ModelCita implements CRUD {
         // Cerrar la conexión
         ConfigDB.closeConnection();
 
-        return objMedico;
+        return objCita;
     }
 
     @Override
     public List<Object> findAll() {
-        return null;
+
+        // 1. Crear lista para guardar lo que nos devuelve el controlador
+        List<Object> listCitas = new ArrayList<>();
+
+        // 2. Abrir la conexión
+        Connection objConnection = ConfigDB.openConnection();
+
+        try {
+
+            // 3. Escribir el Query SQL
+            String sql = "SELECT paciente.nombre, medico.nombre, cita.fecha_cita\n" +
+                    "FROM paciente\n" +
+                    "INNER JOIN cita ON paciente.id_paciente = cita.id_paciente\n" +
+                    "INNER JOIN medico ON medico.id_medico = cita.id_paciente\n" +
+                    "WHERE cita.fecha_cita = cita.fecha_cita; ";
+
+            // 4. Usar el prepareStatement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            // 5. Ejecutar el query
+            ResultSet objResult = objPrepare.executeQuery();
+
+            // 6. Mientrar hay un resultado sgte hacer
+            while (objResult.next()) {
+
+                // 6.1 Crear un medico
+                Cita objCita = new Cita();
+
+                // 6.2 Llenar el objeto con la información de la bd
+                objCita.setId_paciente(objResult.getInt("id_paciente"));
+                objCita.setId_medico(objResult.getInt("id_medico"));
+                objCita.setFecha_cita(objResult.getDate("fecha_cita"));
+                objCita.setHora_cita(objResult.getTime("hora_cita"));
+                objCita.setMotivo(objResult.getString("motivo"));
+
+                // 6.3 Agregar un medico a la lista
+                listCitas.add(objCita);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        // 7. Cerrar la conexion
+        ConfigDB.closeConnection();
+
+        return listCitas;
     }
 
     @Override

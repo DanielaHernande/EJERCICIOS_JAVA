@@ -238,7 +238,6 @@ public class ModelPaciente implements CRUD {
         return objPaciente;
     }
 
-
     public List<Paciente> findByName(String nombre) {
 
         //Creamos la lista

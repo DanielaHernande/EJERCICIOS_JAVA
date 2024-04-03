@@ -1,7 +1,7 @@
+import controller.CItaController;
 import controller.EspecialidadController;
 import controller.MedicoController;
 import controller.PacienteController;
-import model.ModelPaciente;
 
 import javax.swing.*;
 
@@ -118,27 +118,28 @@ public class Main {
                                 break;
 
                             case "2":
+
                                 String optionP = "";
+                                do {
+                                    optionP = JOptionPane.showInputDialog("""
+                                            1. Consult all patients.
+                                            2. Viewing a patient's name
+                                            3. Exit.
+                                                                            
+                                            Choose an option:
+                                            """);
 
-                                optionP = JOptionPane.showInputDialog("""
-                                1. Consult all patients.
-                                2. Viewing a patient's name
-                                3. Exit.
-                                                                
-                                Choose an option:
-                                """);
+                                    switch (optionP) {
 
-                                switch (optionP) {
+                                        case "1":
+                                            PacienteController.getAll();
+                                            break;
 
-                                    case "1":
-                                        PacienteController.getAll();
-                                        break;
-
-                                    case "2":
-                                        PacienteController.getByNombre();
-                                        break;
-
-                                } while (!optionP.equals("3"))
+                                        case "2":
+                                            PacienteController.getByNombre();
+                                            break;
+                                    }
+                                } while (!optionP.equals("3"));
 
                                 break;
 
@@ -155,6 +156,33 @@ public class Main {
                     break;
 
                 case "4":
+
+                    String option4 = "";
+
+                    do {
+                        option4 = JOptionPane.showInputDialog("""
+                                1. Enter a new appointment.
+                                2. Consult appointments by date.
+                                3. Change the date of an appointment.
+                                4. Delete an appointment.
+                                5. Exit.
+                                                                
+                                Choose an option:
+                                """);
+
+                        switch (option4) {
+
+                            case "1":
+                                CItaController.create();
+                                break;
+
+                            case "2":
+                                CItaController.getAll();
+                                break;
+                        }
+
+                    } while (!option4.equals("5"));
+
                     break;
             }
 
