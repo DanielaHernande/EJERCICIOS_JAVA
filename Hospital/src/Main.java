@@ -122,7 +122,7 @@ public class Main {
 
                                 optionP = JOptionPane.showInputDialog("""
                                 1. Consult all patients.
-                                2. Consult patient for identification document..
+                                2. Viewing a patient's name
                                 3. Exit.
                                                                 
                                 Choose an option:
@@ -135,17 +135,26 @@ public class Main {
                                         break;
 
                                     case "2":
-
+                                        PacienteController.getByNombre();
                                         break;
 
                                 } while (!optionP.equals("3"))
 
                                 break;
+
+                            case "3":
+                                PacienteController.update();
+                                break;
+
+                            case "4":
+                                PacienteController.delete();
+                                break;
                         }
 
                     } while (!option3.equals("5"));
+                    break;
 
-
+                case "4":
                     break;
             }
 

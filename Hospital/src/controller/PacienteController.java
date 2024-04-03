@@ -2,6 +2,7 @@ package controller;
 
 import entity.Medico;
 import entity.Paciente;
+import model.ModelMedico;
 import model.ModelPaciente;
 
 import javax.swing.*;
@@ -87,7 +88,7 @@ public class PacienteController {
             String nombre = JOptionPane.showInputDialog(null, "Enter new name: " + objPaciente.getNombre());
             String apellidos = JOptionPane.showInputDialog(null, "Enter new last name(s): " + objPaciente.getApellidos());
             LocalDate fecha_nacimiento = LocalDate.parse(JOptionPane.showInputDialog(null, "Enter the new date of birth: " + objPaciente.getFecha_nacimiento()));
-            String documento_identidad = JOptionPane.showInputDialog(null, "Enter the new identity document: " + objPaciente.getFecha_nacimiento());
+            String documento_identidad = JOptionPane.showInputDialog(null, "Enter the new identity document: " + objPaciente.getDocumento_identidad());
 
             objPaciente.setNombre(nombre);
             objPaciente.setApellidos(apellidos);
@@ -98,12 +99,40 @@ public class PacienteController {
         }
     }
 
+    public static void getByNombre() {
 
+        String idPaciente = JOptionPane.showInputDialog("Enter name patient");
+        ModelPaciente objMPaciente = new ModelPaciente();
 
+        String listaString = "COINCIDENCES \n";
 
+        for (Paciente iterador : objMPaciente.findByName(idPaciente)) {
+            listaString += iterador.toString() + "\n";
+        }
 
+        JOptionPane.showMessageDialog(null, listaString);
 
+    }
 
+    public static void delete() {
 
+        ModelPaciente objMPaciente = new ModelPaciente();
+
+        String listMedico = getAllString();
+
+        int idDelete = Integer.parseInt(JOptionPane.showInputDialog(listMedico + "\n Enter the Id of the patient to be deleted: "));
+
+        Paciente objPaciente = objMPaciente.findById(idDelete);
+
+        if (objPaciente == null) {
+            JOptionPane.showMessageDialog(null, "PAtient not found");
+
+        } else {
+
+            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the Patient? \n" + objPaciente.toString());
+
+            if (confirm == 0) objMPaciente.delete(objPaciente);
+        }
+    }
 
 }

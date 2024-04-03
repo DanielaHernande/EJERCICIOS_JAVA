@@ -2,6 +2,7 @@ package model;
 
 import database.CRUD;
 import database.ConfigDB;
+import entity.Medico;
 import entity.Paciente;
 
 import javax.swing.*;
@@ -155,10 +156,47 @@ public class ModelPaciente implements CRUD {
 
     @Override
     public boolean delete(Object obj) {
-        return false;
+
+        // 1. Convertir el objeto
+        Paciente objPaciente = (Paciente) obj;
+
+        // 2. Abrir la conexión
+        Connection objConnection = ConfigDB.openConnection();
+
+        // 3. Crear una variable de estado
+        boolean isDeleted = false;
+
+        try {
+
+            // 4. Escribir la sentencia SQL
+            String sql = "DELETE FROM paciente WHERE id_paciente = ?;";
+
+            // 5. Creamos el prepareStatement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            // 6. Dar valor a ?
+            objPrepare.setInt(1, objPaciente.getId_paciente());
+
+            // 7. Ejecutamos el Query
+            int totalAffectedRows = objPrepare.executeUpdate();
+
+            // Si las filas afectadas fueron mayor a cero quiere decir que si elimino algo
+            if (totalAffectedRows > 0) {
+                isDeleted = true;
+                JOptionPane.showMessageDialog(null, "The patient was correctly eliminated.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        // 8. Cerrar la conexión
+        ConfigDB.closeConnection();
+
+        return isDeleted;
     }
 
-    public Paciente findById(int id_paciente) {
+    public static Paciente findById(int id_paciente) {
 
         //1. Abrimos la conexion
         Connection objConnection = ConfigDB.openConnection();
@@ -174,7 +212,7 @@ public class ModelPaciente implements CRUD {
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
             //5. Darle valor al paremetro del query
-            objPrepare.setInt(1, id_paciente);
+            objPrepare.setInt(1, (id_paciente));
 
             //6. Ejecutamos el Query
             ResultSet objResult = objPrepare.executeQuery();
@@ -198,5 +236,46 @@ public class ModelPaciente implements CRUD {
         ConfigDB.closeConnection();
 
         return objPaciente;
+    }
+
+
+    public List<Paciente> findByName(String nombre) {
+
+        //Creamos la lista
+        List<Paciente> listPaciente = new ArrayList<>();
+
+        //Abrimos la conexión
+        Connection objConnection = ConfigDB.openConnection();
+
+        try {
+
+            //Sentencia SQL
+            String slq = "SELECT * FROM paciente WHERE nombre LIKE ?;";
+
+            //Preparar el statement
+            PreparedStatement objPrepare = objConnection.prepareStatement(slq);
+            objPrepare.setString(1,"%"+nombre+"%");
+
+            ResultSet objResult = objPrepare.executeQuery();
+
+            while (objResult.next()){
+
+                Paciente objPaciente = new Paciente();
+
+                objPaciente.setId_paciente(objResult.getInt("id_paciente"));
+                objPaciente.setNombre(objResult.getString("nombre"));
+                objPaciente.setApellidos(objResult.getString("apellidos"));
+                objPaciente.setFecha_nacimiento(objResult.getDate("fecha_nacimiento").toLocalDate());
+                objPaciente.setDocumento_identidad(objResult.getString("documento_identidad"));
+
+                listPaciente.add(objPaciente);
+            }
+
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        ConfigDB.closeConnection();
+        return listPaciente;
     }
 }
