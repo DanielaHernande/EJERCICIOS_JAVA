@@ -1,5 +1,7 @@
 import controller.EspecialidadController;
 import controller.MedicoController;
+import controller.PacienteController;
+import model.ModelPaciente;
 
 import javax.swing.*;
 
@@ -66,7 +68,7 @@ public class Main {
                                 1. Enter a new doctor.
                                 2. Consult all doctors.
                                 3. Update doctor.
-                                4. Delete a doctor
+                                4. Delete a doctor.
                                 5. Exit.
                                                                 
                                 Choose an option:
@@ -91,6 +93,32 @@ public class Main {
                         }
 
                     } while (!option2.equals("5"));
+                    break;
+
+                case "3":
+                    String option3 = "";
+
+                    do {
+                        option3 = JOptionPane.showInputDialog("""
+                                1. Enter a new patient.
+                                2. Consult patients.
+                                3. Edit a patient.
+                                4. Delete a patient.
+                                5. Exit.
+                                                                
+                                Choose an option:
+                                """);
+
+                        switch (option3) {
+
+                            case "1":
+                                PacienteController.create();
+                                break;
+                        }
+
+                    } while (!option3.equals("5"));
+
+
                     break;
             }
 

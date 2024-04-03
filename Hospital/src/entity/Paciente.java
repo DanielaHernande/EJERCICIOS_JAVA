@@ -1,5 +1,6 @@
 package entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Paciente {
@@ -7,7 +8,7 @@ public class Paciente {
     private int id_paciente;
     private String nombre;
     private String apellidos;
-    private Date fecha_nacimiento;
+    private String fecha_nacimiento;
     private String documento_identidad;
 
     // Constructores
@@ -18,7 +19,7 @@ public class Paciente {
 
     // Con parámetros
 
-    public Paciente(int id_paciente, String nombre, String apellidos, Date fecha_nacimiento, String documento_identidad) {
+    public Paciente(int id_paciente, String nombre, String apellidos, String fecha_nacimiento, String documento_identidad) {
         this.id_paciente = id_paciente;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -51,11 +52,11 @@ public class Paciente {
         this.apellidos = apellidos;
     }
 
-    public java.sql.Date getFecha_nacimiento() {
+    public String getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
+    public void setFecha_nacimiento(String fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
