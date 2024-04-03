@@ -5,10 +5,7 @@ import database.ConfigDB;
 import entity.Paciente;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class ModeloPaciente implements CRUD {
@@ -32,7 +29,10 @@ public class ModeloPaciente implements CRUD {
             // 5. Asignar valores a lso ? ?
             objPrepare.setString(1, objPaciente.getNombre());
             objPrepare.setString(2, objPaciente.getApellidos());
-            objPrepare.setDate(3, objPaciente.getFecha_nacimiento());
+
+            objPrepare.setDate(3, Date.valueOf(objPaciente.getFecha_nacimiento()));
+
+
             objPrepare.setString(4, objPaciente.getDocumento_identidad());
 
             // 6. Ejecutar el Query

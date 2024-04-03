@@ -8,7 +8,7 @@ public class Paciente {
     private int id_paciente;
     private String nombre;
     private String apellidos;
-    private String fecha_nacimiento;
+    private LocalDate fecha_nacimiento;
     private String documento_identidad;
 
     // Constructores
@@ -19,7 +19,7 @@ public class Paciente {
 
     // Con parámetros
 
-    public Paciente(int id_paciente, String nombre, String apellidos, String fecha_nacimiento, String documento_identidad) {
+    public Paciente(int id_paciente, String nombre, String apellidos, LocalDate fecha_nacimiento, String documento_identidad) {
         this.id_paciente = id_paciente;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -52,11 +52,11 @@ public class Paciente {
         this.apellidos = apellidos;
     }
 
-    public String getFecha_nacimiento() {
+    public LocalDate getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(String fecha_nacimiento) {
+    public void setFecha_nacimiento(LocalDate fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 

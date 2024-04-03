@@ -13,6 +13,8 @@ public class Main {
         String option = "";
 
         do {
+
+            JOptionPane.showMessageDialog(null, "Welcome to the Hospital Management Program");
             option = JOptionPane.showInputDialog("""
                                         
                     1. Specialization option.
@@ -113,6 +115,31 @@ public class Main {
 
                             case "1":
                                 PacienteController.create();
+                                break;
+
+                            case "2":
+                                String optionP = "";
+
+                                optionP = JOptionPane.showInputDialog("""
+                                1. Consult all patients.
+                                2. Consult patient for identification document..
+                                3. Exit.
+                                                                
+                                Choose an option:
+                                """);
+
+                                switch (optionP) {
+
+                                    case "1":
+                                        PacienteController.getAll();
+                                        break;
+
+                                    case "2":
+
+                                        break;
+
+                                } while (!optionP.equals("3"))
+
                                 break;
                         }
 

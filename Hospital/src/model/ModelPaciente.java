@@ -9,9 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class ModelPaciente implements CRUD {
 
@@ -34,7 +33,7 @@ public class ModelPaciente implements CRUD {
             // 5. Asignar valores a lso ? ?
             objPrepare.setString(1, objPaciente.getNombre());
             objPrepare.setString(2, objPaciente.getApellidos());
-            objPrepare.setString(3, objPaciente.getFecha_nacimiento());
+            objPrepare.setString(3, String.valueOf(objPaciente.getFecha_nacimiento()));
             objPrepare.setString(4, objPaciente.getDocumento_identidad());
 
             // 6. Ejecutar el Query
@@ -63,16 +62,141 @@ public class ModelPaciente implements CRUD {
 
     @Override
     public List<Object> findAll() {
-        return null;
+
+        // 1. Crear lista para guardar lo que nos devuelve el controlador
+        List<Object> listPaciente = new ArrayList<>();
+
+        // 2. Abrir la conexión
+        Connection objConnection = ConfigDB.openConnection();
+
+        try {
+
+            // 3. Escribir el Query SQL
+            String sql = "SELECT * FROM paciente;";
+
+            // 4. Usar el prepareStatement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            // 5. Ejecutar el query
+            ResultSet objResult = objPrepare.executeQuery();
+
+            // 6. Mientrar hay un resultado sgte hacer
+            while (objResult.next()) {
+
+                // 6.1 Crear un medico
+                Paciente objPaciente = new Paciente();
+
+                // 6.2 Llenar el objeto con la información de la bd
+               objPaciente.setId_paciente(objResult.getInt("id_paciente"));
+               objPaciente.setNombre(objResult.getString("nombre"));
+               objPaciente.setApellidos(objResult.getString("apellidos"));
+               objPaciente.setFecha_nacimiento(objResult.getDate("fecha_nacimiento").toLocalDate());
+               objPaciente.setDocumento_identidad(objResult.getString("documento_identidad"));
+
+                // 6.3 Agregar un medico a la lista
+                listPaciente.add(objPaciente);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        // 7. Cerrar la conexion
+        ConfigDB.closeConnection();
+
+        return listPaciente;
     }
 
     @Override
     public boolean update(Object obj) {
-        return false;
+
+        // 1. Abrir la conexion
+        Connection objConnection = ConfigDB.openConnection();
+
+        // 2. Convertirlo a un paciente
+        Paciente objPaciente = (Paciente) obj;
+
+        // 3. Variable para comocer el estado de la accion
+        boolean isUpdated = false;
+
+        try {
+
+            // 4. Crear la sentencia SQL
+            String sql = "UPDATE paciente SET nombre = ?, " +
+                    "apellidos = ?, fecha_nacimiento = ?, " +
+                    "documento_identidad = ? WHERE id_paciente = ?;";
+
+            // 5. Crear el statement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            // 6. Asignar valores a los paramentros del Query
+
+            objPrepare.setString(1, objPaciente.getNombre());
+            objPrepare.setString(2, objPaciente.getApellidos());
+            objPrepare.setString(3, String.valueOf(objPaciente.getFecha_nacimiento()));
+            objPrepare.setString(4, objPaciente.getDocumento_identidad());
+
+            //7. Ejecutar el query
+            int totalRowAffected = objPrepare.executeUpdate();
+
+            // Si es mayor a cera significa que si actualizo
+            if (totalRowAffected > 0) {
+                isUpdated = true;
+                JOptionPane.showMessageDialog(null, "The update was successful.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        ConfigDB.closeConnection();
+        return isUpdated;
     }
 
     @Override
     public boolean delete(Object obj) {
         return false;
+    }
+
+    public Paciente findById(int id_paciente) {
+
+        //1. Abrimos la conexion
+        Connection objConnection = ConfigDB.openConnection();
+
+        //2. Crear el coder que vamos retornar
+        Paciente objPaciente = null;
+
+        try {
+            //3. Sentencia SQL
+            String sql = "SELECT * FROM paciente WHERE id_paciente = ?;";
+
+            //4. Preparamos el statement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            //5. Darle valor al paremetro del query
+            objPrepare.setInt(1, id_paciente);
+
+            //6. Ejecutamos el Query
+            ResultSet objResult = objPrepare.executeQuery();
+
+            if (objResult.next()) {
+
+                objPaciente = new Paciente();
+
+                objPaciente.setId_paciente(objResult.getInt("id_paciente"));
+                objPaciente.setNombre(objResult.getString("nombre"));
+                objPaciente.setApellidos(objResult.getString("apellidos"));
+                objPaciente.setFecha_nacimiento(objResult.getDate("fecha_nacimiento").toLocalDate());
+                objPaciente.setDocumento_identidad(objResult.getString("documento_identidad"));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        // 7. Cerrar la conexión
+        ConfigDB.closeConnection();
+
+        return objPaciente;
     }
 }
