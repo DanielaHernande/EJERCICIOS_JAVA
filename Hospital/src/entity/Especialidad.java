@@ -47,9 +47,11 @@ public class Especialidad {
     // toString
     @Override
     public String toString() {
-        return "Especialidad " +
-                "id_especialidad=" + id_especialidad +
-                ", Nombre='" + nombre + '\'' +
-                ", Descripcion= " + descripcion ;
+
+        return  "\n" +
+                "id =" + id_especialidad + "\n"+
+                "Nombre='" + nombre + "\n" +
+                "Descripcion= " + descripcion + "\n" +
+                "---------------------------------------------------------";
     }
 }
