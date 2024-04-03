@@ -177,7 +177,7 @@ public class Main {
                                 break;
 
                             case "2":
-                                CItaController.getAll();
+
                                 break;
                         }
 

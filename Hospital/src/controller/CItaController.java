@@ -42,20 +42,19 @@ public class CItaController {
 
     }
 
-    public static void getAll() {
+/*    public static void getAll() {
 
         ModelCita objModelCita = new ModelCita();
         String listCita = "Appointment list \n";
 
-        for (Object iterador : objModelCita.findAll()) {
+        for (Object iterador : objModelCita.findByDate()) {
 
             //Convertir el objeto en medico
             Cita objCita = (Cita) iterador;
-            listCita += objCita.toString() + "\n";
+            listCita += objCita.toString() + "\n --------------------------------------";
         }
 
         JOptionPane.showMessageDialog(null, listCita);
-    }
-
+    }*/
 
 }

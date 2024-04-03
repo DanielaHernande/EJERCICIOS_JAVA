@@ -3,7 +3,6 @@ package model;
 import database.CRUD;
 import database.ConfigDB;
 import entity.Cita;
-import entity.Medico;
 
 import javax.swing.*;
 import java.sql.*;
@@ -120,5 +119,51 @@ public class ModelCita implements CRUD {
     @Override
     public boolean delete(Object obj) {
         return false;
+    }
+
+    public Cita findByDate(Date fecha_cita) {
+
+        //1. Abrimos la conexion
+        Connection objConnection = ConfigDB.openConnection();
+
+        //2. Crear el coder que vamos retornar
+        Cita objCita = null;
+
+        try {
+            //3. Sentencia SQL
+            String sql = "SELECT paciente.nombre, medico.nombre, cita.fecha_cita\n" +
+                    "FROM paciente\n" +
+                    "INNER JOIN cita ON paciente.id_paciente = cita.id_paciente\n" +
+                    "INNER JOIN medico ON medico.id_medico = cita.id_paciente\n" +
+                    "WHERE cita.fecha_cita = ?;";
+
+            //4. Preparamos el statement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            //5. Darle valor al paremetro del query
+            objPrepare.setDate(1, fecha_cita);
+
+            //6. Ejecutamos el Query
+            ResultSet objResult = objPrepare.executeQuery();
+
+            if (objResult.next()) {
+
+                objCita = new Cita();
+
+                objCita.setId_paciente(objResult.getInt("id_paciente"));
+                objCita.setId_medico(objResult.getInt("id_medico"));
+                objCita.setFecha_cita(objResult.getDate("fecha_cita"));
+                objCita.setHora_cita(objResult.getTime("hora_cita"));
+                objCita.setMotivo(objResult.getString("motivo"));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        // 7. Cerrar la conexión
+        ConfigDB.closeConnection();
+
+        return objCita;
     }
 }

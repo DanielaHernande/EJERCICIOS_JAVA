@@ -38,9 +38,9 @@ public class EspecialidadController {
 
             // Convertir el Objeto a una especialidad
             Especialidad objEspecialidad = (Especialidad) iterador;
-            listEspecialidad += objEspecialidad.toString() + "\n";
+            listEspecialidad += objEspecialidad.toString() + "\n" +
+            "-------------------------------------------------------";
         }
-        ;
 
         JOptionPane.showMessageDialog(null, listEspecialidad);
 
