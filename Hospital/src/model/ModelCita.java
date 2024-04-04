@@ -3,6 +3,8 @@ package model;
 import database.CRUD;
 import database.ConfigDB;
 import entity.Cita;
+import entity.Medico;
+import entity.Paciente;
 
 import javax.swing.*;
 import java.sql.*;
@@ -113,12 +115,85 @@ public class ModelCita implements CRUD {
 
     @Override
     public boolean update(Object obj) {
-        return false;
+
+        // 1. Abrir la conexion
+        Connection objConnection = ConfigDB.openConnection();
+
+        // 2. Convertirlo a una cita
+        Cita objCita = (Cita) obj;
+
+        // 3. Variable para comocer el estado de la accion
+        boolean isUpdated = false;
+
+        try {
+
+            // 4. Crear la sentencia SQL
+            String sql = "UPDATE cita SET fecha_cita = ? WHERE id_cita = ?;";
+
+            // 5. Crear el statement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            // 6. Asignar valores a los paramentros del Query
+            objPrepare.setDate(1, (Date) objCita.getFecha_cita());
+            objPrepare.setDate(2, (Date) objCita.getFecha_cita());
+
+            //7. Ejecutar el query
+            int totalRowAffected = objPrepare.executeUpdate();
+
+            // Si es mayor a cera significa que si actualizo
+            if (totalRowAffected > 0) {
+                isUpdated = true;
+                JOptionPane.showMessageDialog(null, "The update was successful.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        ConfigDB.closeConnection();
+        return isUpdated;
     }
 
     @Override
     public boolean delete(Object obj) {
-        return false;
+
+        // 1. Convertir el objeto
+        Cita objCita = (Cita) obj;
+
+        // 2. Abrir la conexión
+        Connection objConnection = ConfigDB.openConnection();
+
+        // 3. Crear una variable de estado
+        boolean isDeleted = false;
+
+        try {
+
+            // 4. Escribir la sentencia SQL
+            String sql = "DELETE FROM cita WHERE id_cita = ?;";
+
+            // 5. Creamos el prepareStatement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            // 6. Dar valor a ?
+            objPrepare.setInt(1, objCita.getId_cita());
+
+            // 7. Ejecutamos el Query
+            int totalAffectedRows = objPrepare.executeUpdate();
+
+            // Si las filas afectadas fueron mayor a cero quiere decir que si elimino algo
+            if (totalAffectedRows > 0) {
+                isDeleted = true;
+                JOptionPane.showMessageDialog(null, "The Appointment was correctly eliminated.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        // 8. Cerrar la conexión
+        ConfigDB.closeConnection();
+
+        return isDeleted;
     }
 
     public Cita findByDate(Date fecha_cita) {
@@ -126,8 +201,12 @@ public class ModelCita implements CRUD {
         //1. Abrimos la conexion
         Connection objConnection = ConfigDB.openConnection();
 
-        //2. Crear el coder que vamos retornar
+        List<Cita> citas = new ArrayList<>();
+
+        //2. Crear la cita que vamos retornar
         Cita objCita = null;
+        Paciente objPaciente = null;
+        Medico objMedico = null;
 
         try {
             //3. Sentencia SQL
@@ -142,6 +221,52 @@ public class ModelCita implements CRUD {
 
             //5. Darle valor al paremetro del query
             objPrepare.setDate(1, fecha_cita);
+
+            //6. Ejecutamos el Query
+            ResultSet objResult = objPrepare.executeQuery();
+
+            if (objResult.next()) {
+
+                objCita = new Cita();
+                objMedico = new Medico();
+                objPaciente = new Paciente();
+
+                objCita.setId_paciente(objResult.getInt("id_paciente"));
+                objCita.setId_medico(objResult.getInt("id_medico"));
+                objPaciente.setNombre(objResult.getString("nombre"));
+                objMedico.setNombre(objResult.getString("nombre"));
+                objCita.setFecha_cita(objResult.getDate("fecha_cita"));
+                objCita.setHora_cita(objResult.getTime("hora_cita"));
+                objCita.setMotivo(objResult.getString("motivo"));
+                citas.add(objCita);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        // 7. Cerrar la conexión
+        ConfigDB.closeConnection();
+
+        return objCita;
+    }
+    public Cita findById(int id_cita) {
+
+        //1. Abrimos la conexion
+        Connection objConnection = ConfigDB.openConnection();
+
+        //2. Crear el coder que vamos retornar
+        Cita objCita = null;
+
+        try {
+            //3. Sentencia SQL
+            String sql = "SELECT * FROM cita WHERE id_cita = ?;";
+
+            //4. Preparamos el statement
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            //5. Darle valor al paremetro del query
+            objPrepare.setInt(1, id_cita);
 
             //6. Ejecutamos el Query
             ResultSet objResult = objPrepare.executeQuery();
@@ -166,4 +291,6 @@ public class ModelCita implements CRUD {
 
         return objCita;
     }
+
+
 }

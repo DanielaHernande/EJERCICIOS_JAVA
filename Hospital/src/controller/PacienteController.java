@@ -1,13 +1,10 @@
 package controller;
 
-import entity.Medico;
 import entity.Paciente;
-import model.ModelMedico;
 import model.ModelPaciente;
 
 import javax.swing.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class PacienteController {
 
@@ -16,7 +13,7 @@ public class PacienteController {
         // Usamos el modelo
         ModelPaciente objModelPaciente = new ModelPaciente();
 
-        // Pedimos los datos al ususario
+        // Pedimos los datos al Paciente
         String nombre = JOptionPane.showInputDialog("Enter the name of the patient");
         String apellidos = JOptionPane.showInputDialog("Enter the patient's last name");
         String fecha_nacimiento = JOptionPane.showInputDialog("Enter the patient's date of birth (AAAA-MM-DD)");
@@ -28,6 +25,7 @@ public class PacienteController {
         objPaciente.setNombre(nombre);
         objPaciente.setApellidos(apellidos);
         objPaciente.setFecha_nacimiento(LocalDate.parse(fecha_nacimiento));
+        objPaciente.setDocumento_identidad(documento_paciente);
 
         // Llamamos el metodo de insercion
         objPaciente = (Paciente) objModelPaciente.insert(objPaciente);
@@ -125,7 +123,7 @@ public class PacienteController {
         Paciente objPaciente = objMPaciente.findById(idDelete);
 
         if (objPaciente == null) {
-            JOptionPane.showMessageDialog(null, "PAtient not found");
+            JOptionPane.showMessageDialog(null, "Patient not found");
 
         } else {
 

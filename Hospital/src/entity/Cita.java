@@ -14,14 +14,11 @@ public class Cita {
     private String motivo;
 
     // Constructores
-
     // Vacío
     public Cita() {
     }
 
     // Con parámetros
-
-
     public Cita(int id_cita, int id_paciente, int id_medico, Date fecha_cita, Time hora_cita, String motivo) {
         this.id_cita = id_cita;
         this.id_paciente = id_paciente;
@@ -83,13 +80,12 @@ public class Cita {
     // toString
     @Override
     public String toString() {
-        return "Cita{" +
+        return "Cita " +
                 "id_cita=" + id_cita +
-                ", id_paciente=" + id_paciente +
-                ", id_medico=" + id_medico +
-                ", fecha_cita=" + fecha_cita +
-                ", hora_cita=" + hora_cita +
-                ", motivo='" + motivo + '\'' +
-                '}';
+                " id_paciente=" + id_paciente +
+                " id_medico=" + id_medico +
+                " fecha_cita=" + fecha_cita +
+                " hora_cita=" + hora_cita +
+                " motivo='" + motivo + '\'';
     }
 }

@@ -1,12 +1,10 @@
 package controller;
 
-import entity.Especialidad;
 import entity.Medico;
 import model.ModelMedico;
 import model.ModelEspecialidad;
 
 import javax.swing.*;
-
 
 public class MedicoController {
 

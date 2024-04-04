@@ -81,25 +81,4 @@ public class EspecialidadController {
         }
     }
 
-/*    public static void getById() {
-
-        int idESpecialidad = Integer.parseInt(JOptionPane.showInputDialog("Enter the specialty ID "));
-        ModelEspecialidad objAuthor = new ModelEspecialidad();
-
-        String listaString = "COINCIDENCES \n";
-
-        Especialidad especialidad = objAuthor.findById(idESpecialidad);
-
-        if (especialidad != null) {
-            listaString += especialidad.toString();
-
-        } else {
-
-            listaString += "Specialty not found";
-        }
-
-        JOptionPane.showMessageDialog(null, listaString);
-
-    }*/
-
 }

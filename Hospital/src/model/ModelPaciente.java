@@ -2,14 +2,10 @@ package model;
 
 import database.CRUD;
 import database.ConfigDB;
-import entity.Medico;
 import entity.Paciente;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,13 +84,13 @@ public class ModelPaciente implements CRUD {
                 Paciente objPaciente = new Paciente();
 
                 // 6.2 Llenar el objeto con la información de la bd
-               objPaciente.setId_paciente(objResult.getInt("id_paciente"));
-               objPaciente.setNombre(objResult.getString("nombre"));
-               objPaciente.setApellidos(objResult.getString("apellidos"));
-               objPaciente.setFecha_nacimiento(objResult.getDate("fecha_nacimiento").toLocalDate());
-               objPaciente.setDocumento_identidad(objResult.getString("documento_identidad"));
+                objPaciente.setId_paciente(objResult.getInt("id_paciente"));
+                objPaciente.setNombre(objResult.getString("nombre"));
+                objPaciente.setApellidos(objResult.getString("apellidos"));
+                objPaciente.setFecha_nacimiento(objResult.getDate("fecha_nacimiento").toLocalDate());
+                objPaciente.setDocumento_identidad(objResult.getString("documento_identidad"));
 
-                // 6.3 Agregar un medico a la lista
+                // 6.3 Agregar un paciente a la lista
                 listPaciente.add(objPaciente);
             }
 
@@ -134,7 +130,7 @@ public class ModelPaciente implements CRUD {
 
             objPrepare.setString(1, objPaciente.getNombre());
             objPrepare.setString(2, objPaciente.getApellidos());
-            objPrepare.setString(3, String.valueOf(objPaciente.getFecha_nacimiento()));
+            objPrepare.setDate(3, Date.valueOf(String.valueOf(objPaciente.getFecha_nacimiento())));
             objPrepare.setString(4, objPaciente.getDocumento_identidad());
 
             //7. Ejecutar el query
@@ -151,6 +147,7 @@ public class ModelPaciente implements CRUD {
         }
 
         ConfigDB.closeConnection();
+
         return isUpdated;
     }
 
@@ -253,11 +250,11 @@ public class ModelPaciente implements CRUD {
 
             //Preparar el statement
             PreparedStatement objPrepare = objConnection.prepareStatement(slq);
-            objPrepare.setString(1,"%"+nombre+"%");
+            objPrepare.setString(1, "%" + nombre + "%");
 
             ResultSet objResult = objPrepare.executeQuery();
 
-            while (objResult.next()){
+            while (objResult.next()) {
 
                 Paciente objPaciente = new Paciente();
 
@@ -270,7 +267,7 @@ public class ModelPaciente implements CRUD {
                 listPaciente.add(objPaciente);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 

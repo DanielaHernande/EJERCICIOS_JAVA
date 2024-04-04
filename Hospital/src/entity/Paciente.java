@@ -12,13 +12,11 @@ public class Paciente {
     private String documento_identidad;
 
     // Constructores
-
     // Vacío
     public Paciente() {
     }
 
     // Con parámetros
-
     public Paciente(int id_paciente, String nombre, String apellidos, LocalDate fecha_nacimiento, String documento_identidad) {
         this.id_paciente = id_paciente;
         this.nombre = nombre;
@@ -71,12 +69,11 @@ public class Paciente {
     // toString
     @Override
     public String toString() {
-        return "Paciente{" +
-                "id_paciente=" + id_paciente +
-                ", nombre='" + nombre + '\'' +
-                ", apellidos='" + apellidos + '\'' +
-                ", fecha_nacimiento=" + fecha_nacimiento +
-                ", documento_identidad='" + documento_identidad + '\'' +
-                '}';
+        return "\nPaciente " + "\n" +
+                " id_paciente= " + id_paciente + "\n" +
+                " Nombre= " + nombre + " " + apellidos + '\n' +
+                " Fecha de nacimiento= " + fecha_nacimiento + "\n" +
+                " Documento de identidad= " + documento_identidad + "\n" +
+                "------------------------------------------------";
     }
 }

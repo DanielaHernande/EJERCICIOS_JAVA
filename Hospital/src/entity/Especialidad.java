@@ -49,8 +49,8 @@ public class Especialidad {
     public String toString() {
 
         return  "\n" +
-                "id =" + id_especialidad + "\n"+
-                "Nombre='" + nombre + "\n" +
+                "id = " + id_especialidad + "\n"+
+                "Nombre= " + nombre + "\n" +
                 "Descripcion= " + descripcion + "\n" +
                 "---------------------------------------------------------";
     }

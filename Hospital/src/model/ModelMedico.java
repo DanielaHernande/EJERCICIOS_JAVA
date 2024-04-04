@@ -2,7 +2,6 @@ package model;
 
 import database.CRUD;
 import database.ConfigDB;
-import entity.Especialidad;
 import entity.Medico;
 
 import javax.swing.*;
@@ -60,7 +59,6 @@ public class ModelMedico implements CRUD {
         ConfigDB.closeConnection();
 
         return objMedico;
-
     }
 
     @Override
@@ -142,12 +140,12 @@ public class ModelMedico implements CRUD {
                 JOptionPane.showMessageDialog(null, "The update was successful.");
             }
 
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         ConfigDB.closeConnection();
+
         return isUpdated;
     }
 

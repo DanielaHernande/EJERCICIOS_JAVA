@@ -8,7 +8,6 @@ public class Medico {
     private int id_especialidad;
 
     // Constructores
-
     // Vacío
     public Medico() {
     }
@@ -55,14 +54,12 @@ public class Medico {
     }
 
     // toString
-
     @Override
     public String toString() {
-        return "Medico{" +
-                "id_medico=" + id_medico +
-                ", nombre='" + nombre + '\'' +
-                ", apellidos='" + apellidos + '\'' +
-                ", id_especialidad=" + id_especialidad +
-                '}';
+        return "\nMedico: " + "\n" +
+                " id_medico=" + id_medico + "\n" +
+                " Dr(a) = " + nombre + " " + apellidos + '\n' +
+                " id_especialidad= " + id_especialidad + "\n" +
+                "----------------------------------------------";
     }
 }

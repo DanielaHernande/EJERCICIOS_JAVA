@@ -194,26 +194,5 @@ public class ModelEspecialidad implements CRUD {
         return objEspecialidad;
     }
 
-    /*public List<Especialidad> findByName(String name) {
-
-        // Creamos la lista
-        List<Especialidad> listEspecialidad = new ArrayList<>();
-
-        // Abrimos la conexion
-        Connection objConnection = ConfigDB.openConnection();
-
-        try {
-            // Sentencia SQL
-            String
-
-
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-
-        }
-
-        return listEspecialidad;
-    }*/
 
 }
