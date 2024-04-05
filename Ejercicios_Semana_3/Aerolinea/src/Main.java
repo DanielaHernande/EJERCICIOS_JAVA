@@ -1,17 +1,61 @@
+import controller.AirplaneController;
+import database.ConfigDB;
+
+import javax.swing.*;
+
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        String option = "", option1 = "";
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
-        }
+        do {
+
+            option = JOptionPane.showInputDialog("""
+                                        
+                    1. Aircraft options.
+                    2. Add doctor.
+                    3. Add a patient.
+                    4. Add an appointment.
+                    5. Exit.
+                                        
+                    Choose an option:
+                    """);
+
+            switch (option) {
+
+                case "1":
+
+                    do {
+
+                        option1 = JOptionPane.showInputDialog("""    
+                                                    
+                                1. Aircraft options.
+                                2. Eliminate an airplane.
+                                3. Exit.
+                                                      
+                                Choose an option:
+                                """);
+
+                        switch (option1) {
+
+                            case "1":
+                                AirplaneController.insert();
+                                break;
+
+                            case "2":
+                                AirplaneController.delete();
+
+                                break;
+                        }
+
+                    } while (!option1.equals("3"));
+                    break;
+            }
+
+        } while (!option.equals("5"));
+
+
     }
 }
