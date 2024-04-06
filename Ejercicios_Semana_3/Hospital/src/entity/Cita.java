@@ -13,22 +13,25 @@ public class Cita {
     private Time hora_cita;
     private String motivo;
 
+    private Medico medico;
+    private Paciente paciente;
+
     // Constructores
-    // Vacío
+
     public Cita() {
     }
 
-    // Con parámetros
-    public Cita(int id_cita, int id_paciente, int id_medico, Date fecha_cita, Time hora_cita, String motivo) {
+    public Cita(int id_cita, int id_paciente, int id_medico, Date fecha_cita, Time hora_cita, String motivo, Medico medico, Paciente paciente) {
         this.id_cita = id_cita;
         this.id_paciente = id_paciente;
         this.id_medico = id_medico;
         this.fecha_cita = fecha_cita;
         this.hora_cita = hora_cita;
         this.motivo = motivo;
+        this.medico = medico;
+        this.paciente = paciente;
     }
 
-    // Métodos getters and setters
     public int getId_cita() {
         return id_cita;
     }
@@ -77,16 +80,45 @@ public class Cita {
         this.motivo = motivo;
     }
 
-    // toString
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+    // Vacío
+
     @Override
     public String toString() {
-        return "\n Cita " + "\n" +
-                " Id Cita=" + id_cita + "\n" +
-                " Id Paciente =" + id_paciente + "\n" +
-                " Id Dr(a) =" + id_medico + "\n" +
-                " Fecha de la cita=" + fecha_cita + "\n" +
-                " Hora de la cita =" + hora_cita + "\n" +
-                " Motivo de la consulta ='" + motivo + "\n" +
-                "-------------------------------------------------------------------";
+        return "Cita " +
+                "Id_Cita= " + id_cita + "\n" +
+                "Id_Paciente= " + id_paciente + "\n" +
+                "Paciente= " + paciente.getNombre() + " " + paciente.getApellidos() + "\n" +
+                "Id_Dr(a)= " + id_medico + "\n" +
+                "Dr(a)= " + medico.getNombre() + " " + medico.getApellidos() + "\n" +
+                "Fecha de la cita= " + fecha_cita + "\n" +
+                "Hora de la Cita= " + hora_cita + "\n" +
+                "Motivo= " + motivo + "\n" +
+                "-----------------------------------------------";
+    }
+
+    public String toString2() {
+        return "Cita " +
+                "Id Cita= " + id_cita + "\n" +
+                "Id Paciente= " + id_paciente + "\n" +
+                "Id Medico= " + id_medico + "\n" +
+                "Fecha de la Cita= " + fecha_cita + "\n" +
+                "Hora de la Cita= " + hora_cita + "\n" +
+                "Motivo= " + motivo + "\n" +
+                "---------------------------------";
     }
 }

@@ -27,9 +27,10 @@ public class MedicoController {
         objMedico.setId_especialidad(especialidad);
 
         // Llamamos el metodo de insercion
-        objMedico = (Medico) objModelMedico.insert(objMedico);
+        ModelMedico objMedicoModel = new ModelMedico();
 
-        JOptionPane.showMessageDialog(null, objMedico.toString());
+        objMedicoModel.insert(objMedico);
+
 
     }
 

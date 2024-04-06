@@ -7,6 +7,8 @@ public class Medico {
     private String apellidos;
     private int id_especialidad;
 
+    private Especialidad especialidad;
+
     // Constructores
     // Vacío
     public Medico() {
@@ -59,7 +61,8 @@ public class Medico {
         return "\nMedico: " + "\n" +
                 " id_medico=" + id_medico + "\n" +
                 " Dr(a) = " + nombre + " " + apellidos + '\n' +
-                " id_especialidad= " + id_especialidad + "\n" +
+                " id_especialidad= " + especialidad + "\n" +
                 "----------------------------------------------";
     }
+
 }

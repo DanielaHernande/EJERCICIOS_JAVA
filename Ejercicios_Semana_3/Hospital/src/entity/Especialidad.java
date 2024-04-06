@@ -2,7 +2,7 @@ package entity;
 
 public class Especialidad {
 
-    private int id_especialidad;
+    private int id;
     private String nombre;
     private String descripcion;
 
@@ -13,19 +13,21 @@ public class Especialidad {
     }
 
     // Con parámetros
-    public Especialidad(int id_especialidad, String nombre, String descripcion) {
-        this.id_especialidad = id_especialidad;
+    public Especialidad(int id, String nombre, String descripcion) {
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
 
     // Métodos getters and setters
-    public int getId_especialidad() {
-        return id_especialidad;
+
+
+    public int getId() {
+        return id;
     }
 
-    public void setId_especialidad(int id_especialidad) {
-        this.id_especialidad = id_especialidad;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -48,8 +50,8 @@ public class Especialidad {
     @Override
     public String toString() {
 
-        return  "\n" +
-                "id = " + id_especialidad + "\n"+
+        return "\n" +
+                "Id = " + id + "\n" +
                 "Nombre= " + nombre + "\n" +
                 "Descripcion= " + descripcion + "\n" +
                 "---------------------------------------------------------";

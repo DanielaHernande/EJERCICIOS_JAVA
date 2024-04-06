@@ -88,7 +88,7 @@ public class ModelMedico implements CRUD {
                 Medico objMedico = new Medico();
 
                 // 6.2 Llenar el objeto con la información de la bd
-                objMedico.setId_medico(objResult.getInt("id_medico"));
+                objMedico.setId_medico(objResult.getInt("id"));
                 objMedico.setNombre(objResult.getString("nombre"));
                 objMedico.setApellidos(objResult.getString("apellidos"));
                 objMedico.setId_especialidad(objResult.getInt("id_especialidad"));
@@ -122,7 +122,7 @@ public class ModelMedico implements CRUD {
         try {
 
             // 4. Crear la sentencia SQL
-            String sql = "UPDATE medico SET id_especialidad = ? WHERE id_medico = ?;";
+            String sql = "UPDATE medico SET id_especialidad = ? WHERE id = ?;";
 
             // 5. Crear el statement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
@@ -164,7 +164,7 @@ public class ModelMedico implements CRUD {
         try {
 
             // 4. Escribir la sentencia SQL
-            String sql = "DELETE FROM medico WHERE id_medico = ?;";
+            String sql = "DELETE FROM medico WHERE id = ?;";
 
             // 5. Creamos el prepareStatement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
@@ -201,7 +201,7 @@ public class ModelMedico implements CRUD {
 
         try {
             //3. Sentencia SQL
-            String sql = "SELECT * FROM medico WHERE id_medico = ?;";
+            String sql = "SELECT * FROM medico WHERE id = ?;";
 
             //4. Preparamos el statement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
@@ -216,10 +216,10 @@ public class ModelMedico implements CRUD {
 
                 objMedico = new Medico();
 
-                objMedico.setId_medico(objResult.getInt("id_medico"));
+                objMedico.setId_medico(objResult.getInt("id"));
                 objMedico.setNombre(objResult.getString("nombre"));
                 objMedico.setApellidos(objResult.getString("apellidos"));
-                objMedico.setId_especialidad(objResult.getInt("id_especialista"));
+                objMedico.setId_especialidad(objResult.getInt("id_especialidad"));
             }
 
         } catch (Exception e) {

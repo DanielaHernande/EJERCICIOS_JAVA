@@ -83,10 +83,10 @@ public class PacienteController {
 
         } else {
 
-            String nombre = JOptionPane.showInputDialog(null, "Enter new name: " + objPaciente.getNombre());
-            String apellidos = JOptionPane.showInputDialog(null, "Enter new last name(s): " + objPaciente.getApellidos());
-            LocalDate fecha_nacimiento = LocalDate.parse(JOptionPane.showInputDialog(null, "Enter the new date of birth: " + objPaciente.getFecha_nacimiento()));
-            String documento_identidad = JOptionPane.showInputDialog(null, "Enter the new identity document: " + objPaciente.getDocumento_identidad());
+            String nombre = JOptionPane.showInputDialog(null, "Enter new name: ", objPaciente.getNombre());
+            String apellidos = JOptionPane.showInputDialog(null, "Enter new last name(s): ", objPaciente.getApellidos());
+            LocalDate fecha_nacimiento = LocalDate.parse(JOptionPane.showInputDialog(null, "Enter the new date of birth: ", objPaciente.getFecha_nacimiento()));
+            String documento_identidad = JOptionPane.showInputDialog(null, "Enter the new identity document: ", objPaciente.getDocumento_identidad());
 
             objPaciente.setNombre(nombre);
             objPaciente.setApellidos(apellidos);

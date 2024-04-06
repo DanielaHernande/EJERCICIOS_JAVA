@@ -11,9 +11,9 @@ public class ConfigDB {
     public static Connection objConnection = null;
 
     //Método para conectar la BD
-    public  static  Connection openConnection(){
+    public static Connection openConnection() {
 
-        try{
+        try {
             //Llamamos el driver
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -23,28 +23,28 @@ public class ConfigDB {
             String password = "C4EdgNe0cgokpgHHvGfd";
 
             //Establecer la conexión
-            objConnection = (Connection) DriverManager.getConnection(url,user,password);
+            objConnection = (Connection) DriverManager.getConnection(url, user, password);
             System.out.println("Me conecté perfectamente!!!!");
 
-        }catch (ClassNotFoundException error){
-            System.out.println("ERROR >> Driver no Instalado "+error.getMessage());
-        }catch (SQLException error){
-            System.out.println("ERROR >> error al conectar con la base de datos"+ error.getMessage());
+        } catch (ClassNotFoundException error) {
+            System.out.println("ERROR >> Driver no Instalado " + error.getMessage());
+        } catch (SQLException error) {
+            System.out.println("ERROR >> error al conectar con la base de datos" + error.getMessage());
         }
 
-        return  objConnection;
+        return objConnection;
     }
 
     //Método para finalizar una conexión
-    public static void closeConnection(){
-        try{
+    public static void closeConnection() {
+        try {
             //Si hay una conexión activa entonces la cierra
-            if ( objConnection != null){
+            if (objConnection != null) {
                 objConnection.close();
                 System.out.println("Se finalizó la conexión con éxito");
             }
-        }catch (SQLException e){
-            System.out.println("Error: "+ e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }

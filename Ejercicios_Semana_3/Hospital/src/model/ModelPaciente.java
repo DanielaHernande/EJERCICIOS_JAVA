@@ -84,7 +84,7 @@ public class ModelPaciente implements CRUD {
                 Paciente objPaciente = new Paciente();
 
                 // 6.2 Llenar el objeto con la información de la bd
-                objPaciente.setId_paciente(objResult.getInt("id_paciente"));
+                objPaciente.setId_paciente(objResult.getInt("id"));
                 objPaciente.setNombre(objResult.getString("nombre"));
                 objPaciente.setApellidos(objResult.getString("apellidos"));
                 objPaciente.setFecha_nacimiento(objResult.getDate("fecha_nacimiento").toLocalDate());
@@ -121,7 +121,7 @@ public class ModelPaciente implements CRUD {
             // 4. Crear la sentencia SQL
             String sql = "UPDATE paciente SET nombre = ?, " +
                     "apellidos = ?, fecha_nacimiento = ?, " +
-                    "documento_identidad = ? WHERE id_paciente = ?;";
+                    "documento_identidad = ? WHERE id = ?;";
 
             // 5. Crear el statement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
@@ -132,6 +132,7 @@ public class ModelPaciente implements CRUD {
             objPrepare.setString(2, objPaciente.getApellidos());
             objPrepare.setDate(3, Date.valueOf(String.valueOf(objPaciente.getFecha_nacimiento())));
             objPrepare.setString(4, objPaciente.getDocumento_identidad());
+            objPrepare.setInt(5, objPaciente.getId_paciente());
 
             //7. Ejecutar el query
             int totalRowAffected = objPrepare.executeUpdate();
@@ -166,7 +167,7 @@ public class ModelPaciente implements CRUD {
         try {
 
             // 4. Escribir la sentencia SQL
-            String sql = "DELETE FROM paciente WHERE id_paciente = ?;";
+            String sql = "DELETE FROM paciente WHERE id = ?;";
 
             // 5. Creamos el prepareStatement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
@@ -203,7 +204,7 @@ public class ModelPaciente implements CRUD {
 
         try {
             //3. Sentencia SQL
-            String sql = "SELECT * FROM paciente WHERE id_paciente = ?;";
+            String sql = "SELECT * FROM paciente WHERE id = ?;";
 
             //4. Preparamos el statement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
@@ -218,7 +219,7 @@ public class ModelPaciente implements CRUD {
 
                 objPaciente = new Paciente();
 
-                objPaciente.setId_paciente(objResult.getInt("id_paciente"));
+                objPaciente.setId_paciente(objResult.getInt("id"));
                 objPaciente.setNombre(objResult.getString("nombre"));
                 objPaciente.setApellidos(objResult.getString("apellidos"));
                 objPaciente.setFecha_nacimiento(objResult.getDate("fecha_nacimiento").toLocalDate());
@@ -258,7 +259,7 @@ public class ModelPaciente implements CRUD {
 
                 Paciente objPaciente = new Paciente();
 
-                objPaciente.setId_paciente(objResult.getInt("id_paciente"));
+                objPaciente.setId_paciente(objResult.getInt("id"));
                 objPaciente.setNombre(objResult.getString("nombre"));
                 objPaciente.setApellidos(objResult.getString("apellidos"));
                 objPaciente.setFecha_nacimiento(objResult.getDate("fecha_nacimiento").toLocalDate());

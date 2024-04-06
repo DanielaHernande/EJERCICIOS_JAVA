@@ -1,6 +1,7 @@
 package controller;
 
 import entity.Cita;
+import entity.Paciente;
 import model.ModelCita;
 import model.ModelMedico;
 import model.ModelPaciente;
@@ -19,10 +20,12 @@ public class CItaController {
         ModelPaciente objPaciente = new ModelPaciente();
 
         // Pedimos los datos al Cita
-        int id_paciente = Integer.parseInt(JOptionPane.showInputDialog(objPaciente.findAll() +"\n Enter the patient ID: "));
+        int id_paciente = Integer.parseInt(JOptionPane.showInputDialog(objPaciente.findAll() + "\n Enter the patient ID: "));
         int id_medico = Integer.parseInt(JOptionPane.showInputDialog(objMedico.findAll() + "Enter the Physician ID: "));
+
         Date fecha_cita = Date.valueOf(JOptionPane.showInputDialog("Enter the date of the appointment (YYYYY-MM-DD)"));
         Time hora_cita = Time.valueOf(JOptionPane.showInputDialog("Enter the appointment time (HH:MM:SS)"));
+
         String motivo = JOptionPane.showInputDialog("Enter the reason for the appointment");
 
         // Creamos una instancia de cita
@@ -35,10 +38,8 @@ public class CItaController {
         objCita.setMotivo(motivo);
 
         // Llamamos el metodo de insercion
-        objCita = (Cita) objMCita.insert(objCita);
-
-        JOptionPane.showMessageDialog(null, objCita.toString());
-
+        //objCita = (Cita) objMCita.insert(objCita);
+        objMCita.insert(objCita);
     }
 
     public static void getAll() {
@@ -48,13 +49,14 @@ public class CItaController {
         Date fechaCita = Date.valueOf(fecha_cita);
 
         ModelCita objMCita = new ModelCita();
-        String listCita = "Appointment list: " +fechaCita + " \n";
+        String listCita = "Appointment list: " + fechaCita + " \n";
 
-        List<Cita> citas = (List<Cita>) objMCita.findByDate(fechaCita);
-
+        List<Cita> citas = objMCita.findByDate(fechaCita);
+        System.out.println(citas);
         for (Cita cita : citas) {
             listCita += cita.toString() + "\n";
         }
+
 
         JOptionPane.showMessageDialog(null, listCita);
     }
@@ -68,37 +70,38 @@ public class CItaController {
 
             // Convertir el Objeto a una especialidad
             Cita objCita = (Cita) iterador;
-            listCita += objCita.toString() + "\n";
+            listCita += objCita.toString2() + "\n";
         }
 
         return listCita;
     }
 
-/*    public static void update() {
+    public static void update() {
 
-        // 1. Utilizamos el modelo
-        ModelCita objMCita = new ModelCita();
+        System.out.println("1");
+        ModelCita objCitaModel = new ModelCita();
 
         String listCita = getAllString();
 
-        int idUpdate = Integer.parseInt(JOptionPane.showInputDialog(listCita + "\n Enter the ID of the appointment to edit: "));
+        int idUpdate = Integer.parseInt(JOptionPane.showInputDialog(listCita + "Enter id "));
 
-        // Obteniendo una cita por el id ingresado
-        Cita objCita = objMCita.findByDate(idUpdate);
+        Cita objCita = objCitaModel.findById(idUpdate);
 
-        // Validamos que existe la cita
         if (objCita == null) {
-            JOptionPane.showMessageDialog(null, "appointment not found.");
+
+            JOptionPane.showMessageDialog(null, "not found");
 
         } else {
+            Date fecha_cita = Date.valueOf(JOptionPane.showInputDialog("new appointed date"));
 
-            Date fechaCita = Date.valueOf(JOptionPane.showInputDialog(null, "Enter the new appointment date: " + objCita.getFecha_cita()));
+            objCita.setFecha_cita(fecha_cita);
 
-            objCita.setFecha_cita(fechaCita);
+            objCitaModel.update(objCita);
 
-            objMCita.update(objCita);
+            JOptionPane.showMessageDialog(null, "Updated medical appointment");
         }
-    }*/
+
+    }
 
     public static void delete() {
 

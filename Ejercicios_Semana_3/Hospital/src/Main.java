@@ -34,7 +34,7 @@ public class Main {
                     do {
                         option1 = JOptionPane.showInputDialog("""
                                 Specialty options menu
-                                
+                                                                
                                 1. Enter a new specialty.
                                 2. Consult all specialties.
                                 3. Eliminate a specialty.
@@ -67,7 +67,7 @@ public class Main {
                     do {
                         option2 = JOptionPane.showInputDialog("""
                                 Menu of physician options
-                                
+                                                                
                                 1. Enter a new doctor.
                                 2. Consult all doctors.
                                 3. Update doctor.
@@ -104,7 +104,7 @@ public class Main {
                     do {
                         option3 = JOptionPane.showInputDialog("""
                                 Patient options menu
-                                
+                                                                
                                 1. Enter a new patient.
                                 2. Consult patients.
                                 3. Edit a patient.
@@ -165,7 +165,7 @@ public class Main {
                     do {
                         option4 = JOptionPane.showInputDialog("""
                                 Medical Appointment Options Menu
-                                
+                                                                
                                 1. Enter a new appointment.
                                 2. Consult appointments by date.
                                 3. Change the date of an appointment.
@@ -186,8 +186,7 @@ public class Main {
                                 break;
 
                             case "3":
-                                //
-                                // CItaController.update();
+                                CItaController.update();
                                 break;
 
                             case "4":

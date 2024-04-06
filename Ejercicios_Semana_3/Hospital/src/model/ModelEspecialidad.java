@@ -14,6 +14,7 @@ import java.util.List;
 
 public class ModelEspecialidad implements CRUD {
 
+
     @Override
     public Object insert(Object obj) {
 
@@ -45,7 +46,7 @@ public class ModelEspecialidad implements CRUD {
             while (objRest.next()) {
 
                 // Podemos obtener el valor tambien con indices
-                objEspecialidad.setId_especialidad(objRest.getInt(1));
+                objEspecialidad.setId(objRest.getInt(1));
             }
 
             JOptionPane.showMessageDialog(null, "Specialty added correctly.");
@@ -87,7 +88,7 @@ public class ModelEspecialidad implements CRUD {
                 Especialidad objEspecialidad = new Especialidad();
 
                 // 6.2 Llenar el objeto con la información de la bd
-                objEspecialidad.setId_especialidad(objResult.getInt("id_especialidad"));
+                objEspecialidad.setId(objResult.getInt("id"));
                 objEspecialidad.setNombre(objResult.getString("nombre"));
                 objEspecialidad.setDescripcion(objResult.getString("descripcion"));
 
@@ -126,13 +127,13 @@ public class ModelEspecialidad implements CRUD {
         try {
 
             // 4. Escribir la sentencia SQL
-            String sql = "DELETE FROM especialidad WHERE id_especialidad = ?;";
+            String sql = "DELETE FROM especialidad WHERE id = ?;";
 
             // 5. Creamos el prepareStatement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
             // 6. Dar valor a ?
-            objPrepare.setInt(1, objEspecialidad.getId_especialidad());
+            objPrepare.setInt(1, objEspecialidad.getId());
 
             // 7. Ejecutamos el Query
             int totalAffectedRows = objPrepare.executeUpdate();
@@ -153,7 +154,7 @@ public class ModelEspecialidad implements CRUD {
         return isDeleted;
     }
 
-    public Especialidad findById(int id_especialidad) {
+    public Especialidad findById(int id) {
 
         //1. Abrimos la conexion
         Connection objConnection = ConfigDB.openConnection();
@@ -164,13 +165,13 @@ public class ModelEspecialidad implements CRUD {
         try {
 
             //3. Sentencia SQL
-            String sql = "SELECT * FROM especialidad WHERE id_especialidad = ?;";
+            String sql = "SELECT * FROM especialidad WHERE id = ?;";
 
             //4. Preparamos el statement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
             //5. Darle valor al paremetro del query
-            objPrepare.setInt(1, id_especialidad);
+            objPrepare.setInt(1, id);
 
             //6. Ejecutamos el Query
             ResultSet objResult = objPrepare.executeQuery();
@@ -181,7 +182,7 @@ public class ModelEspecialidad implements CRUD {
 
                 objEspecialidad.setNombre(objResult.getString("nombre"));
                 objEspecialidad.setDescripcion(objResult.getString("descripcion"));
-                objEspecialidad.setId_especialidad(objResult.getInt("id_especialidad"));
+                objEspecialidad.setId(objResult.getInt("id"));
             }
 
         } catch (Exception e) {
