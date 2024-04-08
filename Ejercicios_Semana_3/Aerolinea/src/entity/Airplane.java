@@ -45,9 +45,9 @@ public class Airplane {
     // toString
     @Override
     public String toString() {
-        return "Airplane: " +
-                "Id= " + id +
-                "  Model= " + model +
-                "  Capacity=" + capacity ;
+        return "Airplane: " + "\n" +
+                "  Id= " + id + "\n" +
+                "  Model= " + model + "\n" +
+                "  Capacity=" + capacity + "\n" + "\n";
     }
 }

@@ -14,14 +14,13 @@ import java.util.List;
 
 public class ModelAirplane implements CRUD {
 
-
     @Override
     public Object insert(Object obj) {
 
         // 1. Abrimos la conexión
         Connection objConnection = ConfigDB.openConnection();
 
-        // 2. Convertir el objeto que llego a una médico
+        // 2. Convertir el objeto que llego a una avion
         Airplane objAirplane = (Airplane) obj;
 
         try {
@@ -78,15 +77,16 @@ public class ModelAirplane implements CRUD {
             // 4. Usar el prepareStatement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
-            // 5. Ejecutar el Query y obtener el resulatdo (ResulSet)
+            // 5. Ejecutar el Query y obtener el resultado (ResulSet)
             ResultSet objResult = objPrepare.executeQuery();
 
             while (objResult.next()) {
 
-                // 6.1 Crear un avion
+                // 6.1 Crear una nueva instancia de avión
                 Airplane objAirplane = new Airplane();
 
                 // 6.2 Llenar el objeto con la información de la bd
+                objAirplane.setId(objResult.getInt("id"));
                 objAirplane.setModel(objResult.getString("model"));
                 objAirplane.setCapacity(objResult.getInt("capacity"));
 
@@ -95,7 +95,8 @@ public class ModelAirplane implements CRUD {
             }
 
         } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
+            System.out.println("ERROR > " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         // 7. Cerrar la conexión
@@ -132,7 +133,7 @@ public class ModelAirplane implements CRUD {
             // 6. Dar valor a ?
             objPrepare.setInt(1, objAirplane.getId());
 
-            // 7. Ejecutamos el Query
+            // 7. Ejecutamos el Query (executeUpdate()) nos devuelve un nuemro de filas afectadas
             int totalAffectedRows = objPrepare.executeUpdate();
 
             // Si las filas afectadas fueron mayor a cero quiere decir que si elimino algo
@@ -143,7 +144,7 @@ public class ModelAirplane implements CRUD {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR" +e.getMessage());
+            JOptionPane.showMessageDialog(null, "ERROR" + e.getMessage());
         }
 
         ConfigDB.closeConnection();
@@ -151,42 +152,4 @@ public class ModelAirplane implements CRUD {
         return isDeleted;
     }
 
-    public Airplane findById(int id) {
-
-        //1. Abrimos la conexion
-        Connection objConnection = ConfigDB.openConnection();
-
-        //2. Crear el coder que vamos retornar
-        Airplane objAirplane = null;
-
-        try {
-
-            //3. Sentencia SQL
-            String sql = "SELECT * FROM airplane WHERE id = ?;";
-
-            //4. Preparamos el statement
-            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
-
-            //5. Darle valor al paremetro del query
-            objPrepare.setInt(1, id);
-
-            //6. Ejecutamos el Query
-            ResultSet objResult = objPrepare.executeQuery();
-
-            if (objResult.next()) {
-
-                objAirplane = new Airplane();
-
-                objAirplane.setModel(objResult.getString("model"));
-                objAirplane.setCapacity(objResult.getInt("capacity"));
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-
-        ConfigDB.closeConnection();
-
-        return objAirplane;
-    }
 }

@@ -5,45 +5,35 @@ import model.ModelAirplane;
 import utils.Utils;
 
 import javax.swing.*;
+import java.util.List;
 
 public class AirplaneController {
 
     public static void insert() {
 
-        String model = JOptionPane.showInputDialog("Ingrese el modelo");
-        int capacity = Integer.parseInt(JOptionPane.showInputDialog("ingrese la capacidad"));
+        String model = JOptionPane.showInputDialog("Enter the aircraft model");
+        int capacity = Integer.parseInt(JOptionPane.showInputDialog("Enter the aircraft capacity"));
 
         instanceModel().insert(new Airplane(model, capacity));
     }
 
     public static void getAll() {
 
-        ModelAirplane objModelAitplane = new ModelAirplane();
-        String listAirplane = "list of airplane \n";
-
-        for (Object iterador : objModelAitplane.findAll()) {
-
-            // COnvertir el objeto a un avion
-            Airplane objAirplane = (Airplane) iterador;
-            listAirplane += objAirplane.toString() + "\n";
-        }
-
-        JOptionPane.showMessageDialog(null, listAirplane);
+        String list = getAll(instanceModel().findAll());
+        JOptionPane.showMessageDialog(null, list);
     }
 
-    public static String getAllString() {
+    public static String getAll(List<Object> List) {
 
-        ModelAirplane objModelAitplane = new ModelAirplane();
         String listAirplane = "list of airplane \n";
 
-        for (Object iterador : objModelAitplane.findAll()) {
+        for (Object iterador : List) {
 
             // COnvertir el objeto a un avion
             Airplane objAirplane = (Airplane) iterador;
             listAirplane += objAirplane.toString() + "\n";
         }
 
-        JOptionPane.showMessageDialog(null, listAirplane);
         return listAirplane;
     }
 
@@ -53,7 +43,7 @@ public class AirplaneController {
 
         Airplane objSelected = (Airplane) JOptionPane.showInputDialog(
                 null,
-                "Selecciona un avion ",
+                "Select an aircraft to delete: ",
                 "",
                 JOptionPane.QUESTION_MESSAGE,
                 null,
